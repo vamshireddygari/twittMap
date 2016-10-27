@@ -1,0 +1,600 @@
+<!-- 
+ This is the page displayed on loading.. Integrate Admin LTE here (the basic design) -->
+{% extends 'layout.html' %} {% block title %}My Page{% endblock %} {% block head %} {% parent %}
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<!-- jQuery 2.1.4 -->
+<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.min.js"></script>
+<!-- AdminLTE App -->
+<script src="js/app.min.js"></script>
+<!-- SlimScroll 1.3.0 -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+{% endblock %} {% block content %} {% parent %}
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>rk</b>2797</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Tweet</b>Map</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Messages: style can be found in dropdown.less-->
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <!-- Tasks: style can be found in dropdown.less -->
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs">Rama Kompella</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <p>
+                                    Rama Kompella - rk2797
+                                    <small>Columbia University</small>
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>Rama Kompella</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <!-- search form -->
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop"></i>
+                        <span>Keyword Filter</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <!-- TODO -->
+                        <li><a href="#" onclick="updateTweetData('');"><i class="fa fa-circle-o"></i>All Tweets</a></li>
+                        <li><a href="#" onclick="updateTweetData('apple');"><i class="fa fa-circle-o"></i>Apple</a></li>
+                        <li><a href="#" onclick="updateTweetData('google');"><i class="fa fa-circle-o"></i>Google</a></li>
+                        <li><a href="#" onclick="updateTweetData('love');"><i class="fa fa-circle-o"></i>Love</a></li>
+                        <li><a href="#" onclick="updateTweetData('fun');"><i class="fa fa-circle-o"></i>Fun</a></li>
+                        <li><a href="#" onclick="updateTweetData('hate');"><i class="fa fa-circle-o"></i>Hate</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Technologies</span>
+                            <span class="info-box-number">Node.js, AWS, JavaScript, HTML5</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Keywords</span>
+                            <span class="info-box-number">apple, google, love, hate, fun</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <!-- fix for small devices only -->
+                <div class="clearfix visible-sm-block"></div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">AWS</span>
+                            <span class="info-box-number">EC-2, RDS and ELB</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Static Tweets</span>
+                            <span class="info-box-number">216</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- DIRECT CHAT -->
+                    <div class="box box-warning direct-chat direct-chat-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Submission Conversation</h3>
+                            <div class="box-tools pull-right">
+                                <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></bu tton>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Conversations are loaded here -->
+                            <div class="direct-chat-messages">
+                                <!-- Message. Default to the left -->
+                                <div class="direct-chat-msg">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-left">Rama Kompella</span>
+                                        <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                                    </div>
+                                    <!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="img/user1-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text">
+                                        Hi ! This is our design of TweetMap application
+                                    </div>
+                                    <!-- /.direct-chat-text -->
+                                </div>
+                                <!-- /.direct-chat-msg -->
+                                <!-- Message to the right -->
+                                <div class="direct-chat-msg right">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-right">TA</span>
+                                        <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                                    </div>
+                                    <!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="img/user6-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text">
+                                        Hi ! It looks good
+                                    </div>
+                                    <!-- /.direct-chat-text -->
+                                </div>
+                                <!-- /.direct-chat-msg -->
+                                <!-- Message. Default to the left -->
+                                <div class="direct-chat-msg">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-left">Rama Kompella</span>
+                                        <span class="direct-chat-timestamp pull-right">23 Jan 5:37 pm</span>
+                                    </div>
+                                    <!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="img/user1-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text">
+                                        Completed tasks required for bonus points
+                                    </div>
+                                    <!-- /.direct-chat-text -->
+                                </div>
+                                <!-- /.direct-chat-msg -->
+                                <!-- Message to the right -->
+                                <div class="direct-chat-msg right">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-right">TA</span>
+                                        <span class="direct-chat-timestamp pull-left">23 Jan 6:10 pm</span>
+                                    </div>
+                                    <!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="img/user6-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text">
+                                        That's great. Everything looks fine !
+                                    </div>
+                                    <!-- /.direct-chat-text -->
+                                </div>
+                                <!-- /.direct-chat-msg -->
+                            </div>
+                            <!--/.direct-chat-messages-->
+                            <!-- Contacts are loaded here -->
+                            <div class="direct-chat-contacts">
+                                <ul class="contacts-list">
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="img/user1-128x128.jpg">
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                  Count Dracula
+                                  <small class="contacts-list-date pull-right">2/28/2015</small>
+                                </span>
+                                                <span class="contacts-list-msg">How have you been? I was...</span>
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="img/user7-128x128.jpg">
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                  Sarah Doe
+                                  <small class="contacts-list-date pull-right">2/23/2015</small>
+                                </span>
+                                                <span class="contacts-list-msg">I will be waiting for...</span>
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="img/user3-128x128.jpg">
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                  Nadia Jolie
+                                  <small class="contacts-list-date pull-right">2/20/2015</small>
+                                </span>
+                                                <span class="contacts-list-msg">I'll call you back at...</span>
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="img/user5-128x128.jpg">
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                  Nora S. Vans
+                                  <small class="contacts-list-date pull-right">2/10/2015</small>
+                                </span>
+                                                <span class="contacts-list-msg">Where is your new...</span>
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="img/user6-128x128.jpg">
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                  John K.
+                                  <small class="contacts-list-date pull-right">1/27/2015</small>
+                                </span>
+                                                <span class="contacts-list-msg">Can I take a look at...</span>
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="img/user8-128x128.jpg">
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                  Kenneth M.
+                                  <small class="contacts-list-date pull-right">1/4/2015</small>
+                                </span>
+                                                <span class="contacts-list-msg">Never mind I found...</span>
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                </ul>
+                                <!-- /.contatcts-list -->
+                            </div>
+                            <!-- /.direct-chat-pane -->
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!--/.direct-chat -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <!-- Info Boxes Style 2 -->
+                    <div class="info-box bg-yellow">
+                        <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">#Fun</span>
+                            <span class="info-box-number">42</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 19.4%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-green">
+                        <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">#Love</span>
+                            <span class="info-box-number">146</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 67.5"></div>
+                            </div>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">#Apple</span>
+                            <span class="info-box-number">12</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 5%"></div>
+                            </div>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <!-- Heat Map -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Heat Map</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div id="heatmap"></div>
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- <div class="box-footer clearfix">
+                  <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                  <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                </div> -->
+                        <!-- /.box-footer -->
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <!-- Normal Map -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Marker Map</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div id="map"></div>
+                        </div>
+                        <!-- /.box-body -->
+                        <!--                      <div class="box-footer clearfix">
+                        </div> -->
+                        <!-- /.box-footer -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- TABLE: LATEST ORDERS -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Latest Static Tweets</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="table-responsive make-scrollable">
+                                <table class="table no-margin">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Tweet</th>
+                                            <th>Keyword</th>
+                                            <th>Language</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- <div class="box-footer clearfix">
+                  <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                  <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+                </div> -->
+                        <!-- /.box-footer -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>COMS</b> E6998
+        </div>
+        <strong>Copyright &copy; 2015-2016 <a href="https://www.linkedin.com/in/krskashyap">Rama Kompella</a>.</strong> All rights reserved.
+    </footer>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript::;">
+                            <h4 class="control-sidebar-subheading">
+                    Extract Tweets
+                    <span class="label label-danger pull-right">100%</span>
+                  </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 100%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <h4 class="control-sidebar-subheading">
+                    Store tweets in DB (AWS)
+                    <span class="label label-success pull-right">100%</span>
+                  </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <h4 class="control-sidebar-subheading">
+                    Web Sockets
+                    <span class="label label-warning pull-right">100%</span>
+                  </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 100%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript::;">
+                            <h4 class="control-sidebar-subheading">
+                    App deploy using AWS
+                    <span class="label label-primary pull-right">100%</span>
+                  </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 100%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">Server-Side</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Tweets extraction
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Used node-tweet-stream package to extract and keywords to filter
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Web sockets
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Used socket.io package available in Node.js
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Store in DB
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Used AWS - RDS to store the tweets
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+                    <h3 class="control-sidebar-heading">Clinet-Side</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            HTML5
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            CSS3
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            JavaScript
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=visualization&callback=initMap" async defer></script>
+{% endblock %}
