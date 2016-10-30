@@ -62,7 +62,7 @@ function sleep(milliseconds) {
   }
 }
 var client = new elasticsearch.Client({
-         host: 'https://search-tweetmap-j6tdjuw2dq2j4p2qxluwnbjj2q.us-east-1.es.amazonaws.com/',
+         host: 'https://search-tweetmap-asdasdauw2dq2j4p2qxluwnbjj2q.us-east-1.es.amazonaws.com/',
          log: 'trace'
          });
 
