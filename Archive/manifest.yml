@@ -1,7 +1,0 @@
-applications:
-- name: tweetmap-dev
-  path: .
-  command: npm start
-  memory: 256M
-  env:
-   NODE_ENV: production
